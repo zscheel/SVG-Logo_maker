@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const { Shape } = require('./lib/shapes');
+const fs = require('fs/promises');
 
 
 const inputs = [
@@ -17,7 +19,7 @@ const inputs = [
     },
     {
         type: "input",
-        message: "enter a the color of the text or optionaly a hexadecimal number.",
+        message: "enter the color of the text or optionaly a hexadecimal number.",
         name: 'textColor',
         validate: textColor => {
             if (textColor) {
@@ -35,7 +37,7 @@ const inputs = [
     },
     {
         type: 'input',
-        message: "enter a the color of the text or optionaly a hexadecimal number.",
+        message: "enter the color of the shape or optionaly a hexadecimal number.",
         name: 'shapeColor',
         validate: shapeColor => {
             if (shapeColor) {
@@ -51,8 +53,13 @@ const inputs = [
 function init() {
     inquirer.prompt(inputs)
     .then(response => {
-        console.log(response)
-        return response;
+            console.log(response)
+            const finalShape = new Shape;
+            finalShape.shape = response.shapes
+            finalShape.shapeColor = response.shapeColor
+            finalShape.textColor = response.textColor
+            finalShape.text = response.text
+            fs.writeFile('./lib/logo.svg', finalShape.mainRender())
         }
     )
 }
