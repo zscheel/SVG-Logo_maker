@@ -53,13 +53,13 @@ const inputs = [
 function init() {
     inquirer.prompt(inputs)
     .then(response => {
-            console.log(response)
             const finalShape = new Shape;
             finalShape.shape = response.shapes
             finalShape.shapeColor = response.shapeColor
             finalShape.textColor = response.textColor
             finalShape.text = response.text
             fs.writeFile('./lib/logo.svg', finalShape.mainRender())
+            console.log('Generated logo.svg');
         }
     )
 }
